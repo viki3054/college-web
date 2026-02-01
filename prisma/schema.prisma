@@ -73,6 +73,8 @@ model User {
   markedAttendance AttendanceRecord[] @relation("AttendanceMarkedBy")
   publishedResults Result[]           @relation("ResultPublishedBy")
 
+  recordedBusEvents BusEvent[] @relation("BusEventRecordedBy")
+
   @@index([role])
 }
 
@@ -133,6 +135,9 @@ model Student {
   parents           ParentStudent[]
   attendanceEntries AttendanceEntry[]
   results           Result[]
+
+  busAssignments BusAssignment[]
+  busEvents      BusEvent[]
 }
 
 model Parent {
@@ -574,7 +579,7 @@ model BusEvent {
   bus        Bus      @relation(fields: [busId], references: [id], onDelete: Cascade)
   route      BusRoute @relation(fields: [routeId], references: [id], onDelete: Cascade)
   student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  recordedBy User     @relation(fields: [recordedById], references: [id], onDelete: Restrict)
+  recordedBy User     @relation("BusEventRecordedBy", fields: [recordedById], references: [id], onDelete: Restrict)
 
   @@index([routeId, occurredAt])
   @@index([studentId, occurredAt])

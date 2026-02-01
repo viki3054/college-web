@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
@@ -317,12 +318,293 @@ async function seedPublicContentIfEmpty() {
   }
 }
 
+async function seedDemoData() {
+  const admin = await prisma.user.findFirst({ where: { role: "ADMIN" } });
+  if (!admin) return;
+
+  const academicYear = "2025-26";
+
+  const class10A = await prisma.class.upsert({
+    where: { grade_section_academicYear: { grade: "10", section: "A", academicYear } },
+    create: { name: "Grade 10", grade: "10", section: "A", academicYear },
+    update: { name: "Grade 10" },
+  });
+
+  const class9B = await prisma.class.upsert({
+    where: { grade_section_academicYear: { grade: "9", section: "B", academicYear } },
+    create: { name: "Grade 9", grade: "9", section: "B", academicYear },
+    update: { name: "Grade 9" },
+  });
+
+  const math = await prisma.subject.upsert({
+    where: { code: "MATH-10" },
+    create: { name: "Mathematics", code: "MATH-10" },
+    update: { name: "Mathematics" },
+  });
+
+  const science = await prisma.subject.upsert({
+    where: { code: "SCI-10" },
+    create: { name: "Science", code: "SCI-10" },
+    update: { name: "Science" },
+  });
+
+  const english = await prisma.subject.upsert({
+    where: { code: "ENG-10" },
+    create: { name: "English", code: "ENG-10" },
+    update: { name: "English" },
+  });
+
+  const teacherEmail = "teacher1@school.local";
+  const teacherPasswordHash = await bcrypt.hash("Teacher123!", 12);
+  const teacherUser = await prisma.user.upsert({
+    where: { email: teacherEmail },
+    create: {
+      email: teacherEmail,
+      name: "Asha Patil",
+      role: "TEACHER",
+      passwordHash: teacherPasswordHash,
+      isActive: true,
+      permissions: [],
+    },
+    update: { role: "TEACHER", isActive: true },
+  });
+
+  const teacher = await prisma.teacher.upsert({
+    where: { employeeNo: "T-1001" },
+    create: {
+      userId: teacherUser.id,
+      employeeNo: "T-1001",
+      phone: "+91 90000 00001",
+    },
+    update: { userId: teacherUser.id, phone: "+91 90000 00001" },
+  });
+
+  await prisma.teacherClass.upsert({
+    where: { teacherId_classId: { teacherId: teacher.id, classId: class10A.id } },
+    create: { teacherId: teacher.id, classId: class10A.id },
+    update: {},
+  });
+
+  await prisma.teacherSubject.upsert({
+    where: { teacherId_subjectId: { teacherId: teacher.id, subjectId: math.id } },
+    create: { teacherId: teacher.id, subjectId: math.id },
+    update: {},
+  });
+
+  await prisma.teacherSubject.upsert({
+    where: { teacherId_subjectId: { teacherId: teacher.id, subjectId: science.id } },
+    create: { teacherId: teacher.id, subjectId: science.id },
+    update: {},
+  });
+
+  await prisma.class.update({
+    where: { id: class10A.id },
+    data: { classTeacherId: teacher.id },
+  });
+
+  const studentEmail = "student1@school.local";
+  const studentPasswordHash = await bcrypt.hash("Student123!", 12);
+  const studentUser = await prisma.user.upsert({
+    where: { email: studentEmail },
+    create: {
+      email: studentEmail,
+      name: "Rohit Kulkarni",
+      role: "STUDENT",
+      passwordHash: studentPasswordHash,
+      isActive: true,
+      permissions: [],
+    },
+    update: { role: "STUDENT", isActive: true },
+  });
+
+  const student = await prisma.student.upsert({
+    where: { admissionNo: "S-1001" },
+    create: {
+      userId: studentUser.id,
+      admissionNo: "S-1001",
+      rollNo: 1,
+      classId: class10A.id,
+    },
+    update: { userId: studentUser.id, classId: class10A.id, rollNo: 1 },
+  });
+
+  const parentEmail = "parent1@school.local";
+  const parentPasswordHash = await bcrypt.hash("Parent123!", 12);
+  const parentUser = await prisma.user.upsert({
+    where: { email: parentEmail },
+    create: {
+      email: parentEmail,
+      name: "Sanjay Kulkarni",
+      role: "PARENT",
+      passwordHash: parentPasswordHash,
+      isActive: true,
+      permissions: [],
+    },
+    update: { role: "PARENT", isActive: true },
+  });
+
+  const parent = await prisma.parent.upsert({
+    where: { userId: parentUser.id },
+    create: { userId: parentUser.id, phone: "+91 90000 00002" },
+    update: { phone: "+91 90000 00002" },
+  });
+
+  await prisma.parentStudent.upsert({
+    where: { parentId_studentId: { parentId: parent.id, studentId: student.id } },
+    create: { parentId: parent.id, studentId: student.id, relation: "Father" },
+    update: { relation: "Father" },
+  });
+
+  for (const subject of [math, science, english]) {
+    await prisma.classSubject.upsert({
+      where: { classId_subjectId: { classId: class10A.id, subjectId: subject.id } },
+      create: { classId: class10A.id, subjectId: subject.id },
+      update: {},
+    });
+  }
+
+  await prisma.classSubject.upsert({
+    where: { classId_subjectId: { classId: class9B.id, subjectId: english.id } },
+    create: { classId: class9B.id, subjectId: english.id },
+    update: {},
+  });
+
+  const existingHomework = await prisma.homework.findFirst({
+    where: { classId: class10A.id, title: "Algebra Practice Set" },
+  });
+  if (!existingHomework) {
+    const dueAt = new Date();
+    dueAt.setDate(dueAt.getDate() + 5);
+    await prisma.homework.create({
+      data: {
+        classId: class10A.id,
+        subjectId: math.id,
+        title: "Algebra Practice Set",
+        description: "Solve questions 1-15 from Chapter 4.",
+        dueAt,
+        createdById: teacherUser.id,
+      },
+    });
+  }
+
+  const existingMaterial = await prisma.studyMaterial.findFirst({
+    where: { classId: class10A.id, title: "Photosynthesis Notes" },
+  });
+  if (!existingMaterial) {
+    await prisma.studyMaterial.create({
+      data: {
+        classId: class10A.id,
+        subjectId: science.id,
+        title: "Photosynthesis Notes",
+        description: "Key concepts and diagrams for photosynthesis.",
+        youtubeUrl: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
+        createdById: teacherUser.id,
+      },
+    });
+  }
+
+  const existingVideo = await prisma.videoLink.findFirst({
+    where: { classId: class10A.id, title: "Linear Equations Basics" },
+  });
+  if (!existingVideo) {
+    await prisma.videoLink.create({
+      data: {
+        classId: class10A.id,
+        subjectId: math.id,
+        title: "Linear Equations Basics",
+        url: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
+        createdById: teacherUser.id,
+      },
+    });
+  }
+
+  const existingTimetable = await prisma.timetable.findFirst({ where: { classId: class10A.id } });
+  if (!existingTimetable) {
+    const bytes = Buffer.from("Demo timetable for Grade 10 A");
+    const sha256 = crypto.createHash("sha256").update(bytes).digest("hex");
+    const uploaded = await prisma.uploadedFile.create({
+      data: {
+        name: "grade-10-a-timetable.txt",
+        mimeType: "text/plain",
+        bytes,
+        size: bytes.length,
+        sha256,
+        uploadedById: admin.id,
+      },
+    });
+
+    await prisma.timetable.create({
+      data: {
+        classId: class10A.id,
+        title: "Grade 10 A Timetable",
+        uploadedFileId: uploaded.id,
+      },
+    });
+  }
+
+  const attendanceDate = new Date();
+  attendanceDate.setHours(0, 0, 0, 0);
+  const record = await prisma.attendanceRecord.upsert({
+    where: {
+      date_classId_subjectId: { date: attendanceDate, classId: class10A.id, subjectId: math.id },
+    },
+    create: {
+      date: attendanceDate,
+      classId: class10A.id,
+      subjectId: math.id,
+      markedById: teacherUser.id,
+    },
+    update: { markedById: teacherUser.id },
+  });
+
+  await prisma.attendanceEntry.upsert({
+    where: { recordId_studentId: { recordId: record.id, studentId: student.id } },
+    create: { recordId: record.id, studentId: student.id, status: "PRESENT" },
+    update: { status: "PRESENT" },
+  });
+
+  await prisma.result.upsert({
+    where: {
+      studentId_subjectId_term_examName: {
+        studentId: student.id,
+        subjectId: math.id,
+        term: "Term 1",
+        examName: "Unit Test",
+      },
+    },
+    create: {
+      studentId: student.id,
+      subjectId: math.id,
+      term: "Term 1",
+      examName: "Unit Test",
+      marks: 78,
+      maxMarks: 100,
+      grade: "B+",
+      publishedAt: new Date(),
+      publishedById: teacherUser.id,
+    },
+    update: {
+      marks: 78,
+      maxMarks: 100,
+      grade: "B+",
+      publishedAt: new Date(),
+      publishedById: teacherUser.id,
+    },
+  });
+
+  console.log("Seeded demo accounts:");
+  console.log("Teacher: teacher1@school.local / Teacher123!");
+  console.log("Student: student1@school.local / Student123!");
+  console.log("Parent: parent1@school.local / Parent123!");
+}
+
 async function main() {
   await upsertNotificationSetting();
   await upsertEmailTemplates();
   await upsertDkteisPages();
   await upsertAdminUser();
   await seedPublicContentIfEmpty();
+  await seedDemoData();
 }
 
 main()
