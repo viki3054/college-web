@@ -103,3 +103,36 @@ npx prisma studio
 npm run lint
 npm run build
 ```
+
+## Import content from DKTEIS (authorized)
+
+If you are authorized to reuse the content from `dkteis.com`, you can import pages into the built-in Website Pages module.
+
+1) Apply DB changes
+
+```bash
+npx prisma migrate dev
+npx prisma generate
+```
+
+2) Run importer (dry run first)
+
+```bash
+set DKTEIS_DRY_RUN=true
+npm run import:dkteis
+```
+
+3) Import for real (optionally publish)
+
+```bash
+set DKTEIS_PUBLISH=true
+set DKTEIS_MAX_PAGES=200
+set DKTEIS_DELAY_MS=200
+npm run import:dkteis
+```
+
+Notes:
+- Imported pages store both plain text (`content`) and sanitized HTML (`contentHtml`) so they display with formatting and images.
+- Links and images are rewritten to absolute DKTEIS URLs.
+
+Imported pages appear in the admin panel at `/dashboard/admin/site-pages` and publicly at `/p/<slug>`.

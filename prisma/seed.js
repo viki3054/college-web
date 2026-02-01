@@ -54,6 +54,177 @@ async function upsertNotificationSetting() {
   });
 }
 
+async function upsertDkteisPages() {
+  const pages = [
+    {
+      title: "DKTE Society's International School, Tardal",
+      slug: "dkteis-home",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/",
+      content:
+        "Call For Admissions: +91 8149065016\nEmail: dkteis@gmail.com\n\nVISION\nEducation should be a joyful experience and we believe that every child is unique and has / her unique strengths and we work for manifestation of these strengths.\nWe believe in nurturing the creativity of the students so that they find their niche.\n\nMISSION\nOur focus is to provide a stimulating early learning and child care experience which promotes each child's social/ emotional, physical & cognitive development. Our kinder garden provides a safe developmentally appropriate, nurturing environment that promotes social, emotional,\n\nChairman Message\nHon. Kallappanna B. Awade\nDear Students, Parents, and Faculty, I am honored to address you as the Chairman of our esteemed institution and share with you the general vision that guides our school.\n\nAddress: KATP Road Tardal 416 121\nPhone: +91 8149065016, +91 7020453191\nMail: info@dekteis.com",
+      contentHtml: `
+<section>
+  <p><strong>Call For Admissions:</strong> <a href="tel:+918149065016">+91 8149065016</a></p>
+  <p><strong>Email:</strong> <a href="mailto:dkteis@gmail.com">dkteis@gmail.com</a></p>
+</section>
+
+<hr />
+
+<h2>VISION</h2>
+<p>
+  Education should be a joyful experience and we believe that every child is unique and has his/her unique strengths
+  and we work for manifestation of these strengths. We believe in nurturing the creativity of the students so that
+  they find their niche.
+</p>
+
+<h2>MISSION</h2>
+<p>
+  Our focus is to provide a stimulating early learning and child care experience which promotes each child's
+  social/emotional, physical &amp; cognitive development. Our kinder garden provides a safe developmentally appropriate,
+  nurturing environment that promotes social, emotional.
+</p>
+
+<h2>School Achievements</h2>
+<p>
+  We provide comprehensive, reliable, and efficient knowledge to our students, leveraging cutting-edge technology
+  and top-tier expertise to deliver peace of mind and lasting value.
+</p>
+
+<h2>Chairman Message</h2>
+<p><strong>Hon. Kallappanna B. Awade</strong></p>
+<p>
+  Dear Students, Parents, and Faculty, I am honored to address you as the Chairman of our esteemed institution and
+  share with you the general vision that guides our school. At DKTE International School, we firmly believe that
+  education is the key to unlocking the full potential of every individual.
+</p>
+<p>
+  Our vision encompasses creating an inclusive and nurturing learning environment that empowers our students to
+  become confident, responsible, and compassionate global citizens.
+</p>
+<p>
+  At the core of our educational philosophy lies a commitment to academic excellence. We strive to provide our
+  students with a rigorous and well-rounded curriculum that not only imparts knowledge but also fosters critical
+  thinking, creativity, and problem-solving skills.
+</p>
+<p>
+  As the Chairman, I assure you that our dedicated and passionate team of educators is committed to upholding the
+  vision of our school. We continuously strive for excellence and are devoted to providing a nurturing and inspiring
+  educational experience for each student.
+</p>
+
+<h2>D.K.T.E. Society’s</h2>
+<p>
+  D.K.T.E. Society’s 40 years long &amp; rich experience of catering to high quality education from KG to Ph.D.
+  International school, Tardal (CBSE) is one of the dream project of our founder president Hon. Kallappanna Awade
+  (Dada).
+</p>
+
+<h2>Contact</h2>
+<p><strong>Address:</strong> KATP Road Tardal 416 121</p>
+<p><strong>Call Now:</strong> <a href="tel:+918149065016">+91 8149065016</a>, <a href="tel:+917020453191">+91 7020453191</a></p>
+<p><strong>Mail:</strong> <a href="mailto:info@dekteis.com">info@dekteis.com</a></p>
+      `.trim(),
+    },
+    {
+      title: "About",
+      slug: "dkteis-about",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/about/",
+      content: "Education should be joyful experience and we believe that every child is unique and has his/her unique strengths.",
+      contentHtml: `
+<h2>About</h2>
+<p>
+  Education should be joyful experience and we believe that every child is unique and has his/her unique strengths
+  &amp; we work for manifestation of these strengths. Learning should be a fun-filled journey of discovery. We believe
+  in nurturing the creativity of the students.
+</p>
+      `.trim(),
+    },
+    {
+      title: "Management",
+      slug: "dkteis-management",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/management/",
+      content: "Management",
+      contentHtml: `<h2>Management</h2><p>Content to be updated with full management details.</p>`,
+    },
+    {
+      title: "Infrastructure",
+      slug: "dkteis-infrastructure",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/infrastructure/",
+      content: "Infrastructure of the school.",
+      contentHtml: `
+<h2>Infrastructure of the School</h2>
+<p>
+  We care, we take a personalized approach to each customer, and our management team is never more than a phone
+  call or email away.
+</p>
+      `.trim(),
+    },
+    {
+      title: "Academic",
+      slug: "dkteis-academic",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/academic/",
+      content: "Academic",
+      contentHtml: `<h2>Academic</h2><p>Content to be updated with academic details.</p>`,
+    },
+    {
+      title: "Facilities",
+      slug: "dkteis-facilities",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/facilities/",
+      content: "Facilities",
+      contentHtml: `<h2>Facilities</h2><p>Content to be updated with facilities details.</p>`,
+    },
+    {
+      title: "Blog",
+      slug: "dkteis-blog",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/blog/",
+      content: "Blog",
+      contentHtml: `<h2>Blog</h2><p>Blog content will appear here.</p>`,
+    },
+    {
+      title: "Contact",
+      slug: "dkteis-contact",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/contact/",
+      content: "Contact",
+      contentHtml: `
+<h2>Contact</h2>
+<p><strong>Address:</strong> KATP Road Tardal 416 121</p>
+<p><strong>Call Now:</strong> <a href="tel:+918149065016">+91 8149065016</a>, <a href="tel:+917020453191">+91 7020453191</a></p>
+<p><strong>Mail:</strong> <a href="mailto:info@dekteis.com">info@dekteis.com</a></p>
+      `.trim(),
+    },
+    {
+      title: "Disclosure",
+      slug: "dkteis-disclosure",
+      isPublished: true,
+      sourceUrl: "https://www.dkteis.com/disclosure/",
+      content: "Disclosure",
+      contentHtml: `<h2>Disclosure</h2><p>Disclosure content will appear here.</p>`,
+    },
+  ];
+
+  for (const p of pages) {
+    await prisma.sitePage.upsert({
+      where: { slug: p.slug },
+      create: p,
+      update: {
+        title: p.title,
+        content: p.content,
+        contentHtml: p.contentHtml,
+        isPublished: p.isPublished,
+        sourceUrl: p.sourceUrl,
+      },
+    });
+  }
+}
+
 async function upsertAdminUser() {
   const email = process.env.ADMIN_EMAIL || "admin@school.local";
   const password = process.env.ADMIN_PASSWORD || "Admin123!";
@@ -149,6 +320,7 @@ async function seedPublicContentIfEmpty() {
 async function main() {
   await upsertNotificationSetting();
   await upsertEmailTemplates();
+  await upsertDkteisPages();
   await upsertAdminUser();
   await seedPublicContentIfEmpty();
 }

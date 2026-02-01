@@ -30,6 +30,7 @@ export default async function DashboardLayout({ children }) {
                 <Link className="block rounded-lg px-3 py-2 hover:bg-zinc-50" href="/dashboard/admin/results">Results</Link>
                 <Link className="block rounded-lg px-3 py-2 hover:bg-zinc-50" href="/dashboard/admin/materials">Materials</Link>
                 <Link className="block rounded-lg px-3 py-2 hover:bg-zinc-50" href="/dashboard/admin/timetables">Timetables</Link>
+                <Link className="block rounded-lg px-3 py-2 hover:bg-zinc-50" href="/dashboard/admin/site-pages">Website Pages</Link>
                 <Link className="block rounded-lg px-3 py-2 hover:bg-zinc-50" href="/dashboard/admin/settings/email">Email Settings</Link>
               </>
             ) : null}

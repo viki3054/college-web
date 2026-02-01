@@ -20,11 +20,12 @@ export async function PATCH(req, { params }) {
     const rl = enforceRateLimit(req, { limit: 40, windowMs: 60_000, keyPrefix: "admin-classes-patch" });
     if (!rl.ok) return jsonError("Too many requests", 429);
 
+    const { id } = await params;
     const body = await req.json();
     const data = patchSchema.parse(body);
 
     await prisma.class.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name: data.name,
         grade: data.grade,
@@ -46,7 +47,8 @@ export async function DELETE(req, { params }) {
     const rl = enforceRateLimit(req, { limit: 10, windowMs: 60_000, keyPrefix: "admin-classes-delete" });
     if (!rl.ok) return jsonError("Too many requests", 429);
 
-    await prisma.class.delete({ where: { id: params.id } });
+    const { id } = await params;
+    await prisma.class.delete({ where: { id } });
     return jsonOk();
   } catch (e) {
     return jsonError(e, 400);

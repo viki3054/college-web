@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220" />
+      <stop offset="1" stop-color="#273449" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)" />
+  <circle cx="240" cy="220" r="120" fill="rgba(255,255,255,0.08)" />
+  <rect x="420" y="160" width="640" height="460" rx="28" fill="rgba(255,255,255,0.06)" />
+  <text x="460" y="240" fill="#e2e8f0" font-size="36" font-family="Arial, sans-serif">Sports Ground</text>
+  <text x="460" y="290" fill="#94a3b8" font-size="20" font-family="Arial, sans-serif">Physical Development</text>
+</svg>

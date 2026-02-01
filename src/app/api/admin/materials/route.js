@@ -17,9 +17,16 @@ export async function GET() {
     const materials = await prisma.studyMaterial.findMany({
       orderBy: { createdAt: "desc" },
       take: 200,
-      include: {
-        class: true,
-        subject: true,
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        youtubeUrl: true,
+        attachmentName: true,
+        attachmentUrl: true,
+        createdAt: true,
+        class: { select: { id: true, grade: true, section: true, academicYear: true } },
+        subject: { select: { id: true, name: true, code: true } },
       },
     });
     return jsonOk({ materials });

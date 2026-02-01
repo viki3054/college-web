@@ -16,11 +16,11 @@ const createSchema = z.object({
   role: z.enum(["ADMIN", "TEACHER", "PARENT", "STUDENT"]),
 
   // Student
-  admissionNo: z.string().min(1).max(50).optional(),
+  admissionNo: z.string().max(50).optional().or(z.literal("")),
   classId: z.string().optional().or(z.literal("")),
 
   // Teacher
-  employeeNo: z.string().min(1).max(50).optional(),
+  employeeNo: z.string().max(50).optional().or(z.literal("")),
   phone: z.string().max(50).optional().or(z.literal("")),
 
   // Parent

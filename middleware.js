@@ -15,6 +15,10 @@ export default withAuth({
       if (pathname.startsWith("/dashboard/teacher")) return token.role === "TEACHER";
       if (pathname.startsWith("/dashboard/parent")) return token.role === "PARENT";
       if (pathname.startsWith("/dashboard/student")) return token.role === "STUDENT";
+      if (pathname.startsWith("/dashboard/bus")) {
+        const perms = token.permissions || [];
+        return token.role === "ADMIN" || (Array.isArray(perms) && perms.includes("BUS_STAFF"));
+      }
 
       // /dashboard root is allowed for any logged-in role
       return true;

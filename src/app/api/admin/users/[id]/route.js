@@ -19,7 +19,7 @@ export async function PATCH(req, { params }) {
     const rl = enforceRateLimit(req, { limit: 30, windowMs: 60_000, keyPrefix: "admin-users-patch" });
     if (!rl.ok) return jsonError("Too many requests", 429);
 
-    const id = params.id;
+    const { id } = await params;
     const body = await req.json();
     const data = patchSchema.parse(body);
 
@@ -45,7 +45,7 @@ export async function DELETE(req, { params }) {
     const rl = enforceRateLimit(req, { limit: 10, windowMs: 60_000, keyPrefix: "admin-users-delete" });
     if (!rl.ok) return jsonError("Too many requests", 429);
 
-    const id = params.id;
+    const { id } = await params;
     await prisma.user.delete({ where: { id } });
 
     return jsonOk();

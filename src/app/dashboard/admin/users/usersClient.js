@@ -36,6 +36,16 @@ export default function AdminUsersClient({ initialUsers, classes }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  function handleKindChange(value) {
+    setKind(value);
+    setAdmissionNo("");
+    setEmployeeNo("");
+    setPhone("");
+    setClassId("");
+    setChildAdmissionNo("");
+    setRelation("");
+  }
+
   async function createUser(e) {
     e.preventDefault();
     setLoading(true);
@@ -54,13 +64,23 @@ export default function AdminUsersClient({ initialUsers, classes }) {
       name,
       password,
       role: roleMap[kind],
-      admissionNo,
-      employeeNo,
-      phone,
-      classId,
-      childAdmissionNo,
-      relation,
     };
+
+    if (kind === "STUDENT") {
+      payload.admissionNo = admissionNo;
+      payload.classId = classId;
+    }
+
+    if (kind === "TEACHER") {
+      payload.employeeNo = employeeNo;
+      payload.phone = phone;
+    }
+
+    if (kind === "PARENT") {
+      payload.phone = phone;
+      payload.childAdmissionNo = childAdmissionNo;
+      payload.relation = relation;
+    }
 
     const res = await fetch("/api/admin/users", {
       method: "POST",
@@ -126,7 +146,7 @@ export default function AdminUsersClient({ initialUsers, classes }) {
         <form className="mt-4 grid gap-3 md:grid-cols-2" onSubmit={createUser}>
           <div>
             <label className="text-xs font-medium text-zinc-700">Kind</label>
-            <Select value={kind} onChange={(e) => setKind(e.target.value)}>
+            <Select value={kind} onChange={(e) => handleKindChange(e.target.value)}>
               <option value="STUDENT">Student</option>
               <option value="PARENT">Parent</option>
               <option value="TEACHER">Teacher</option>

@@ -11,7 +11,8 @@ export async function DELETE(req, { params }) {
     const rl = enforceRateLimit(req, { limit: 10, windowMs: 60_000, keyPrefix: "admin-subjects-delete" });
     if (!rl.ok) return jsonError("Too many requests", 429);
 
-    await prisma.subject.delete({ where: { id: params.id } });
+    const { id } = await params;
+    await prisma.subject.delete({ where: { id } });
     return jsonOk();
   } catch (e) {
     return jsonError(e, 400);

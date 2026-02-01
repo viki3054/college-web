@@ -27,6 +27,11 @@ enum EmailStatus {
   FAILED
 }
 
+enum BusEventType {
+  ENTRY
+  EXIT
+}
+
 enum MaterialKind {
   STUDY_MATERIAL
   HOMEWORK
@@ -490,11 +495,90 @@ model NotificationSetting {
   eventsEnabled     Boolean @default(true)
   attendanceEnabled Boolean @default(true)
   resultsEnabled    Boolean @default(true)
+  busEnabled        Boolean @default(true)
 
   fromName String? // display name
   replyTo  String?
 
   updatedAt DateTime @updatedAt
+}
+
+model Bus {
+  id        String @id @default(cuid())
+  name      String
+  number    String? // route/bus number
+  plateNo   String? @unique
+  capacity  Int?
+  isActive  Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  routes BusRoute[]
+  events BusEvent[]
+
+  @@index([isActive])
+}
+
+model BusRoute {
+  id       String @id @default(cuid())
+  name     String
+  busId    String
+  isActive Boolean @default(true)
+
+  // optional denormalized stop list for quick setup
+  stops String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bus         Bus            @relation(fields: [busId], references: [id], onDelete: Cascade)
+  assignments BusAssignment[]
+  events      BusEvent[]
+
+  @@index([busId])
+  @@index([isActive])
+}
+
+model BusAssignment {
+  id        String @id @default(cuid())
+  routeId   String
+  studentId String
+
+  isActive  Boolean @default(true)
+  assignedAt DateTime @default(now())
+  unassignedAt DateTime?
+
+  route   BusRoute @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  student Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([routeId, studentId])
+  @@index([studentId])
+  @@index([routeId, isActive])
+}
+
+model BusEvent {
+  id        String       @id @default(cuid())
+  type      BusEventType
+  occurredAt DateTime    @default(now())
+
+  busId     String
+  routeId   String
+  studentId String
+  recordedById String
+
+  note      String?
+
+  createdAt DateTime @default(now())
+
+  bus        Bus      @relation(fields: [busId], references: [id], onDelete: Cascade)
+  route      BusRoute @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  recordedBy User     @relation(fields: [recordedById], references: [id], onDelete: Restrict)
+
+  @@index([routeId, occurredAt])
+  @@index([studentId, occurredAt])
+  @@index([busId, occurredAt])
 }
 
 model ContactEnquiry {
@@ -507,4 +591,24 @@ model ContactEnquiry {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model SitePage {
+  id    String @id @default(cuid())
+  title String
+  slug  String @unique
+  content String
+
+  // Optional sanitized HTML representation (for imported pages)
+  contentHtml String?
+
+  sourceUrl String?
+
+  isPublished Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isPublished])
+  @@index([sourceUrl])
 }

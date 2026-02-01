@@ -11,7 +11,7 @@ export async function GET(req, { params }) {
 
   try {
     const user = await requireTeacher();
-    const classId = params.classId;
+    const { classId } = await params;
 
     const ctx = await getTeacherContext(user.id);
     assertTeacherHasClass(ctx, classId);
