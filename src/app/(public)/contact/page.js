@@ -10,61 +10,65 @@ export default function ContactPage() {
           <div className="absolute top-20 left-20 h-72 w-72 rounded-full bg-sky-300/40 blur-[120px]" />
         </div>
         <div className="mx-auto max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-sky-300 px-4 py-2 text-xs uppercase tracking-[0.3em] text-sky-600">
-            Contact Information
+          <div className="inline-flex items-center gap-2 rounded-full border-2 border-sky-300 px-5 py-2 text-xs uppercase tracking-wider text-sky-600 font-semibold">
+            Contact Us
           </div>
           <h1 className="mt-6 text-4xl font-bold leading-tight text-slate-900 lg:text-5xl">
-            Connect with DKTE International
+            Get In Touch
           </h1>
           <p className="mt-6 text-lg text-slate-600">
-            Admissions, transport, and general enquiries welcomed. Office responds within one working day.
+            We respond within one working day
           </p>
         </div>
       </section>
 
       <section className="border-y border-sky-200">
-        <div className="mx-auto max-w-6xl px-6 py-12 lg:py-16">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div className="glass-panel space-y-5 rounded-3xl p-6 text-sm text-slate-600">
-              <div className="text-xs font-bold uppercase tracking-[0.28em] text-sky-600">Office details</div>
-              <div className="space-y-3">
+        <div className="mx-auto max-w-6xl px-6 py-12">
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="card-box rounded-3xl p-8">
+              <h2 className="text-2xl font-bold text-slate-900 mb-6">Contact Information</h2>
+              <div className="space-y-6">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Phone</p>
-                  <a className="text-lg font-semibold text-slate-900" href="tel:+918149065016">
+                  <p className="text-xs uppercase tracking-wider text-slate-500 mb-2">Phone</p>
+                  <a className="text-xl font-bold text-sky-600 hover:text-sky-700" href="tel:+918149065016">
                     +91 81490 65016
                   </a>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Email</p>
-                  <a className="text-sm font-semibold text-slate-900" href="mailto:dkteis@gmail.com">
+                  <p className="text-xs uppercase tracking-wider text-slate-500 mb-2">Email</p>
+                  <a className="text-lg font-semibold text-sky-600 hover:text-sky-700" href="mailto:dkteis@gmail.com">
                     dkteis@gmail.com
                   </a>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-500">Campus</p>
-                  <p className="text-sm font-semibold text-slate-900">KATP Road, Tardal</p>
+                  <p className="text-xs uppercase tracking-wider text-slate-500 mb-2">Address</p>
+                  <p className="text-base font-medium text-slate-900">KATP Road, Tardal</p>
+                  <p className="text-sm text-slate-600 mt-1">Ichalkaranji, Maharashtra</p>
+                </div>
+                <div className="pt-4 border-t border-sky-100">
+                  <p className="text-sm text-slate-600">Office: Monday–Saturday</p>
+                  <p className="text-sm text-slate-600">9:30 AM – 4:00 PM</p>
                 </div>
               </div>
-              <p className="text-xs text-slate-500">Office hours: Monday–Saturday, 9.30 a.m. – 4.00 p.m.</p>
             </div>
-            <div className="glass-panel rounded-3xl p-6">
-              <div className="text-xs font-bold uppercase tracking-[0.28em] text-sky-600">Send an enquiry</div>
-              <p className="mt-3 text-sm text-slate-600">We will respond within one working day.</p>
-              <div className="mt-6 rounded-2xl border border-sky-200 bg-sky-50/50 p-4">
-                <ContactForm />
-              </div>
+
+            <div className="card-box rounded-3xl p-8">
+              <h2 className="text-2xl font-bold text-slate-900 mb-6">Send Message</h2>
+              <ContactForm />
             </div>
           </div>
         </div>
       </section>
 
-      <section>
-        <div className="mx-auto max-w-5xl px-6 py-12 text-center text-sm text-slate-600">
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-sky-600">Visit planning</p>
-          <p className="mt-3">
-            Admission visits include a walkthrough of classrooms, labs, library, and play spaces, followed by a meeting
-            with the principal. Please carry a valid photo ID for entry at the gate.
-          </p>
+      <section className="bg-gradient-to-b from-sky-50/50 to-white">
+        <div className="mx-auto max-w-4xl px-6 py-12 text-center">
+          <div className="card-box rounded-3xl p-8">
+            <h3 className="text-lg font-bold text-slate-900 mb-3">Campus Visits</h3>
+            <p className="text-slate-600">
+              Schedule a tour to explore our classrooms, labs, library, and facilities. 
+              Please bring a valid photo ID for campus entry.
+            </p>
+          </div>
         </div>
       </section>
     </div>

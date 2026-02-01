@@ -14,17 +14,17 @@ export default function AboutPage() {
                 About the school
               </div>
               <h1 className="text-4xl font-bold leading-tight text-slate-900 lg:text-5xl">
-                DKTE International School, Tardal
+                DKTE International School
               </h1>
               <p className="text-lg text-slate-600">
-                Founded by D.K.T.E. Society, extending four decades of higher education excellence to a structured CBSE environment for Nursery to Grade VIII.
+                40+ years of D.K.T.E. Society excellence in CBSE education.
               </p>
             </div>
-            <dl className="glass-panel space-y-4 rounded-3xl p-6 text-sm text-slate-600">
-              {[{ label: "Legacy", value: "40+ years of DKTE" }, { label: "Board", value: "CBSE" }, { label: "Location", value: "KATP Road, Tardal" }, { label: "Focus", value: "Holistic, value-led academics" }].map((fact) => (
+            <dl className="card-box space-y-4 rounded-3xl p-6">
+              {[{ label: "Legacy", value: "40+ years" }, { label: "Board", value: "CBSE" }, { label: "Location", value: "Tardal" }, { label: "Grades", value: "K-VIII" }].map((fact) => (
                 <div key={fact.label} className="flex items-center justify-between border-b border-sky-100 pb-3 last:border-b-0 last:pb-0">
-                  <dt className="text-xs uppercase tracking-[0.25em] text-sky-600">{fact.label}</dt>
-                  <dd className="font-semibold text-slate-900">{fact.value}</dd>
+                  <dt className="text-xs uppercase tracking-wider text-sky-600 font-semibold">{fact.label}</dt>
+                  <dd className="font-bold text-slate-900">{fact.value}</dd>
                 </div>
               ))}
             </dl>
@@ -34,37 +34,25 @@ export default function AboutPage() {
 
       <section className="border-t border-sky-200">
         <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="grid gap-12 lg:grid-cols-2">
-            <div className="space-y-4">
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-sky-600">Part of the D.K.T.E. legacy</p>
-              <h2 className="text-2xl font-bold text-slate-900">What families can count on</h2>
-              <p className="text-sm leading-6 text-slate-600">
-                D.K.T.E. Society has built engineering, textile, and management institutions recognised across India.
-                DKTE International School carries the same attention to systems: academic plans are published, pastoral
-                mentors track every learner, and leadership reviews progress weekly.
-              </p>
-              <p className="text-sm leading-6 text-slate-600">
-                The campus is intentionally calm. Corridors are supervised, routines are predictable, and expectations are
-                clear—allowing students to focus on scholarship, conduct, and community.
-              </p>
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold text-slate-900">Why Choose DKTE</h2>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="card-box space-y-3 rounded-2xl p-6 text-center">
+              <div className="text-4xl font-bold text-sky-600">40+</div>
+              <div className="text-sm text-slate-600">Years of Excellence</div>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2">
-              <div className="glass-panel space-y-2 rounded-2xl p-4">
-                <div className="text-3xl font-bold text-slate-900">40+</div>
-                <div className="text-xs font-medium uppercase tracking-wider text-slate-600">Years of Education</div>
-              </div>
-              <div className="glass-panel space-y-2 rounded-2xl p-4">
-                <div className="text-3xl font-bold text-slate-900">100%</div>
-                <div className="text-xs font-medium uppercase tracking-wider text-slate-600">System Based</div>
-              </div>
-              <div className="glass-panel space-y-2 rounded-2xl p-4">
-                <div className="text-3xl font-bold text-slate-900">CBSE</div>
-                <div className="text-xs font-medium uppercase tracking-wider text-slate-600">Curriculum</div>
-              </div>
-              <div className="glass-panel space-y-2 rounded-2xl p-4">
-                <div className="text-3xl font-bold text-slate-900">K-8</div>
-                <div className="text-xs font-medium uppercase tracking-wider text-slate-600">Growing Campus</div>
-              </div>
+            <div className="card-box space-y-3 rounded-2xl p-6 text-center">
+              <div className="text-4xl font-bold text-sky-600">100%</div>
+              <div className="text-sm text-slate-600">System Based</div>
+            </div>
+            <div className="card-box space-y-3 rounded-2xl p-6 text-center">
+              <div className="text-4xl font-bold text-sky-600">CBSE</div>
+              <div className="text-sm text-slate-600">Curriculum</div>
+            </div>
+            <div className="card-box space-y-3 rounded-2xl p-6 text-center">
+              <div className="text-4xl font-bold text-sky-600">K-8</div>
+              <div className="text-sm text-slate-600">All Grades</div>
             </div>
           </div>
         </div>

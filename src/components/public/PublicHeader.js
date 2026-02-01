@@ -22,14 +22,14 @@ export default function PublicHeader() {
       <div className="mx-auto max-w-6xl px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <div className="relative h-10 w-10 overflow-hidden rounded-xl bg-gradient-to-br from-sky-400 to-sky-600">
-              <span className="flex h-full items-center justify-center text-xs font-bold text-white">
-                DKTE
+            <div className="relative h-12 w-12 overflow-hidden rounded-xl bg-gradient-to-br from-sky-400 via-sky-500 to-sky-600 shadow-lg shadow-sky-500/30">
+              <span className="flex h-full items-center justify-center text-base font-bold text-white">
+                DI
               </span>
             </div>
             <div className="flex flex-col">
-              <span className="text-base font-semibold text-slate-900">DKTE International School</span>
-              <span className="text-xs uppercase tracking-[0.3em] text-sky-600">CBSE • Tardal</span>
+              <span className="text-lg font-bold text-slate-900">DKTE</span>
+              <span className="text-xs font-medium text-sky-600">International School</span>
             </div>
           </Link>
           <div className="flex items-center gap-4">
