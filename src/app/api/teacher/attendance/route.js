@@ -37,25 +37,29 @@ export async function POST(req) {
     const date = new Date(body.date);
     date.setHours(0, 0, 0, 0);
 
-    const record = await prisma.attendanceRecord.upsert({
+    const subjectId = body.subjectId || null;
+
+    const existing = await prisma.attendanceRecord.findFirst({
       where: {
-        date_classId_subjectId: {
-          date,
-          classId: body.classId,
-          subjectId: body.subjectId || null,
-        },
-      },
-      create: {
         date,
         classId: body.classId,
-        subjectId: body.subjectId || null,
-        markedById: user.id,
-      },
-      update: {
-        markedById: user.id,
-        updatedAt: new Date(),
+        subjectId,
       },
     });
+
+    const record = existing
+      ? await prisma.attendanceRecord.update({
+          where: { id: existing.id },
+          data: { markedById: user.id, updatedAt: new Date() },
+        })
+      : await prisma.attendanceRecord.create({
+          data: {
+            date,
+            classId: body.classId,
+            subjectId,
+            markedById: user.id,
+          },
+        });
 
     await prisma.$transaction(
       body.entries.map((e) =>

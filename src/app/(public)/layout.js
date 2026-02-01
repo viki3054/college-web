@@ -3,9 +3,9 @@ import PublicFooter from "@/components/public/PublicFooter";
 
 export default function PublicLayout({ children }) {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="flex min-h-screen flex-col">
       <PublicHeader />
-      <main className="min-h-[calc(100vh-64px)]">{children}</main>
+      <main className="flex-1">{children}</main>
       <PublicFooter />
     </div>
   );

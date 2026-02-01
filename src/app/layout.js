@@ -1,32 +1,32 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
 export const metadata = {
   title: {
-    default: "Smart School",
-    template: "%s | Smart School",
+    default: "DKTE International School",
+    template: "%s | DKTE International School",
   },
   description:
-    "A modern smart school management system for students, parents, teachers, and administrators.",
+    "Official website and portal for DKTE International School, a CBSE institution guided by D.K.T.E. Society.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

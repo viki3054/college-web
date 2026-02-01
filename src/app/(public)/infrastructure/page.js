@@ -2,62 +2,95 @@ export const metadata = { title: "Infrastructure - DKTE International School" };
 
 export default function InfrastructurePage() {
   return (
-    <div className="bg-slate-50">
-      <section className="border-b border-slate-200 bg-gradient-to-b from-white to-slate-50">
-        <div className="mx-auto max-w-6xl px-6 py-12">
-          <div className="grid gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">Infrastructure</p>
-              <h1 className="mt-3 text-3xl font-semibold text-slate-900">Infrastructure</h1>
-              <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-600">
-                A modern campus designed to support academic excellence, safety, and holistic growth.
+    <div>
+      <section className="relative isolate overflow-hidden px-6 py-20">
+        <div className="absolute inset-0 -z-10 opacity-30">
+          <div className="absolute top-40 left-40 h-96 w-96 rounded-full bg-sky-300/40 blur-[160px]" />
+        </div>
+        <div className="mx-auto max-w-5xl text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-sky-300 px-4 py-2 text-xs uppercase tracking-[0.3em] text-sky-600">
+            Campus Infrastructure
+          </div>
+          <h1 className="mt-6 text-4xl font-bold leading-tight text-slate-900 lg:text-5xl">
+            Intelligent campus design for seamless learning
+          </h1>
+          <p className="mt-6 text-lg text-slate-600">
+            Connected learning zones within a supervised loop, enabling efficient transitions and optimal faculty oversight.
+          </p>
+        </div>
+      </section>
+
+      <section className="border-t border-sky-200">
+        <div className="mx-auto max-w-6xl px-6 py-14">
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div className="space-y-3">
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-sky-600">Academic block</p>
+              <p className="text-sm leading-6 text-slate-600">
+                Naturally lit classrooms, smart boards where required, and movable furniture support both direct instruction
+                and collaborative work. Resource rooms sit adjacent to reduce transition time.
               </p>
             </div>
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <img src="/images/campus-1.svg" alt="Campus" className="h-full w-full object-cover" />
+            <div className="glass-panel rounded-3xl p-6 text-sm text-slate-600">
+              {[
+                "Language + reading loft",
+                "Mathematics lab",
+                "Science laboratories",
+                "Computer & robotics lab",
+              ].map((space) => (
+                <p key={space}>• {space}</p>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-12">
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-          <div className="h-1 w-10 rounded-full bg-slate-900" />
-          <h2 className="mt-4 text-lg font-semibold text-slate-900">School Infrastructure</h2>
-          <p className="mt-3 text-sm leading-6 text-slate-600">
-            Our facilities are purpose-built to provide a safe, comfortable, and inspiring learning environment.
-          </p>
-
-          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <section className="bg-gradient-to-b from-sky-50/50 to-white border-t border-sky-200">
+        <div className="mx-auto max-w-6xl px-6 py-14">
+          <div className="grid gap-10 lg:grid-cols-3">
             {[
-              { title: "Modern Classrooms", desc: "Well-equipped classrooms with modern teaching aids." },
-              { title: "Library", desc: "Extensive collection of books and digital resources." },
-              { title: "Science Labs", desc: "Fully equipped laboratories for practical learning." },
-              { title: "Sports Facilities", desc: "Playground and sports equipment for physical development." },
-              { title: "Computer Lab", desc: "Latest computers with internet connectivity." },
-              { title: "Safety & Security", desc: "Safe and secure campus environment." },
+              {
+                title: "Sports loop",
+                desc: "Multi-sport court, athletics track, and indoor fitness area for structured movement blocks.",
+              },
+              {
+                title: "Cultural wing",
+                desc: "Music, visual arts, drama studio, and AV hall that double up for exhibitions.",
+              },
+              {
+                title: "Community spaces",
+                desc: "Seminar hall for parent briefings and leadership interactions.",
+              },
             ].map((item) => (
-              <div key={item.title} className="rounded-xl border border-slate-200 bg-slate-50 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow">
-                <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                <p className="mt-2 text-sm text-slate-600">{item.desc}</p>
-              </div>
+              <article key={item.title} className="space-y-2 border-l-2 border-sky-600 pl-4">
+                <h3 className="text-sm font-bold text-slate-900">{item.title}</h3>
+                <p className="text-sm text-slate-600">{item.desc}</p>
+              </article>
             ))}
           </div>
         </div>
+      </section>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            { src: "/images/campus-4.svg", label: "Classrooms" },
-            { src: "/images/campus-3.svg", label: "Labs" },
-            { src: "/images/campus-5.svg", label: "Sports" },
-          ].map((item) => (
-            <div key={item.label} className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
-              <img src={item.src} alt={item.label} className="h-36 w-full object-cover" />
-              <div className="border-t border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-900">
-                {item.label}
-              </div>
+      <section className="border-t border-sky-200">
+        <div className="mx-auto max-w-6xl px-6 py-14">
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div className="space-y-4">
+              <p className="text-xs font-bold uppercase tracking-[0.28em] text-sky-600">Logistics & safety</p>
+              <ul className="space-y-2 text-sm text-slate-600">
+                {["CCTV coverage across blocks", "RFID-based attendance option", "Verified transport partners and GPS tracking", "Fire safety certifications and regular drills"].map((item) => (
+                  <li key={item} className="flex gap-3">
+                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-sky-600" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          ))}
+            <div className="glass-panel rounded-3xl p-6 text-sm text-slate-600">
+              <p>
+                The maintenance team conducts weekly walkthroughs with leadership to review housekeeping, horticulture, and
+                infrastructure enhancements so the campus stays ready for students every day.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
     </div>

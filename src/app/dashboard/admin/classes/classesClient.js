@@ -16,6 +16,8 @@ export default function AdminClassesClient({ initialClasses, subjects, teachers 
   const [academicYear, setAcademicYear] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [subjectSelection, setSubjectSelection] = useState({});
+  const [teacherSelection, setTeacherSelection] = useState({});
 
   async function createClass(e) {
     e.preventDefault();
@@ -152,13 +154,30 @@ export default function AdminClassesClient({ initialClasses, subjects, teachers 
                     <span className="text-xs text-zinc-500">No subjects assigned</span>
                   ) : null}
                 </div>
-                <div className="mt-3 flex gap-2">
-                  <Select onChange={(e) => e.target.value && addSubject(c.id, e.target.value)} defaultValue="">
-                    <option value="">Add subject...</option>
+                <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <Select
+                    value={subjectSelection[c.id] || ""}
+                    onChange={(e) =>
+                      setSubjectSelection((prev) => ({ ...prev, [c.id]: e.target.value }))
+                    }
+                  >
+                    <option value="">Select subject...</option>
                     {subjects.map((s) => (
                       <option key={s.id} value={s.id}>{s.name}</option>
                     ))}
                   </Select>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      const subjectId = subjectSelection[c.id];
+                      if (!subjectId) return;
+                      addSubject(c.id, subjectId);
+                      setSubjectSelection((prev) => ({ ...prev, [c.id]: "" }));
+                    }}
+                    disabled={!subjectSelection[c.id]}
+                  >
+                    Assign Subject
+                  </Button>
                 </div>
               </div>
 
@@ -180,8 +199,13 @@ export default function AdminClassesClient({ initialClasses, subjects, teachers 
                     <span className="text-xs text-zinc-500">No teachers assigned</span>
                   ) : null}
                 </div>
-                <div className="mt-3">
-                  <Select onChange={(e) => e.target.value && addTeacher(c.id, e.target.value)} defaultValue="">
+                <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <Select
+                    value={teacherSelection[c.id] || ""}
+                    onChange={(e) =>
+                      setTeacherSelection((prev) => ({ ...prev, [c.id]: e.target.value }))
+                    }
+                  >
                     <option value="">Assign teacher...</option>
                     {teachers.map((t) => (
                       <option key={t.id} value={t.id}>
@@ -189,6 +213,18 @@ export default function AdminClassesClient({ initialClasses, subjects, teachers 
                       </option>
                     ))}
                   </Select>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      const teacherId = teacherSelection[c.id];
+                      if (!teacherId) return;
+                      addTeacher(c.id, teacherId);
+                      setTeacherSelection((prev) => ({ ...prev, [c.id]: "" }));
+                    }}
+                    disabled={!teacherSelection[c.id]}
+                  >
+                    Assign Teacher
+                  </Button>
                 </div>
               </div>
             </div>
